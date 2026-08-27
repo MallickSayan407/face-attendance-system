@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Face Attendance System</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <h1>
+            Face Attendance System
+        </h1>
+
+        <p>
+            Employee Attendance Management
+        </p>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     NAVIGATION
+====================================================== -->
+
+<nav class="navigation">
+
+    <button
+        class="nav-button active"
+        data-section="dashboardSection"
+    >
+        Dashboard
+    </button>
+
+    <button
+        class="nav-button"
+        data-section="employeesSection"
+    >
+        Employees
+    </button>
+
+    <button
+        class="nav-button"
+        data-section="scanSection"
+    >
+        Scan Face
+    </button>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="container">
+
+
+<!-- =====================================================
+     DASHBOARD SECTION
+====================================================== -->
+
+<section
+    id="dashboardSection"
+    class="page-section active-section"
+>
+
+
+    <!-- DATE -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+                Attendance Dashboard
+            </h2>
+
+            <p>
+                View employee attendance
+                for a selected date.
+            </p>
+
+        </div>
+
+        <div class="date-section">
+
+            <label for="attendanceDate">
+                Attendance Date
+            </label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY CARDS -->
+
+    <section class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="card-title">
+                Total Employees
+            </div>
+
+            <div
+                class="card-value"
+                id="totalEmployees"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="card-title">
+                Present
+            </div>
+
+            <div
+                class="card-value"
+                id="presentEmployees"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="card-title">
+                Absent
+            </div>
+
+            <div
+                class="card-value"
+                id="absentEmployees"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="card-title">
+                Attendance Rate
+            </div>
+
+            <div
+                class="card-value"
+                id="attendancePercentage"
+            >
+                -
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ATTENDANCE TABLE -->
+
+    <section class="data-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Today's Attendance
+                </h2>
+
+                <p>
+                    Employees marked present
+                    on the selected date.
+                </p>
+
+            </div>
+
+            <button
+                id="refreshAttendanceButton"
+                class="primary-button"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Employee</th>
+
+                        <th>Email</th>
+
+                        <th>Department</th>
+
+                        <th>Designation</th>
+
+                        <th>Time</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="attendanceTableBody"
+                >
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</section>
+
+
+<!-- =====================================================
+     EMPLOYEES SECTION
+====================================================== -->
+
+<section
+    id="employeesSection"
+    class="page-section"
+>
+
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+                Employee Management
+            </h2>
+
+            <p>
+                Manage registered employees
+                and their face images.
+            </p>
+
+        </div>
+
+
+        <button
+            id="showAddEmployeeButton"
+            class="primary-button"
+        >
+            + Add Employee
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH + REFRESH -->
+
+    <div class="employee-toolbar">
+
+        <input
+            type="text"
+            id="employeeSearch"
+            placeholder="Search by name, email or department..."
+        >
+
+        <button
+            id="refreshEmployeesButton"
+            class="secondary-button"
+        >
+            Refresh
+        </button>
+
+    </div>
+
+
+    <!-- EMPLOYEE TABLE -->
+
+    <section class="data-section">
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Department</th>
+
+                        <th>Designation</th>
+
+                        <th>Face Image</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="employeeTableBody"
+                >
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</section>
+
+
+<!-- =====================================================
+     SCAN FACE SECTION
+====================================================== -->
+
+<section
+    id="scanSection"
+    class="page-section"
+>
+
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+                Face Attendance Scanner
+            </h2>
+
+            <p>
+                Use the camera to recognize
+                a registered employee.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="scanner-layout">
+
+
+        <!-- CAMERA -->
+
+        <section class="camera-card">
+
+            <div class="camera-header">
+
+                <div>
+
+                    <h2>
+                        Live Camera
+                    </h2>
+
+                    <p>
+                        Position the employee's
+                        face inside the camera.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="camera-container">
+
+                <video
+                    id="cameraVideo"
+                    autoplay
+                    playsinline
+                    muted
+                >
+                </video>
+
+
+                <div
+                    id="cameraPlaceholder"
+                    class="camera-placeholder"
+                >
+
+                    <div class="camera-icon">
+                        📷
+                    </div>
+
+                    <h3>
+                        Camera is stopped
+                    </h3>
+
+                    <p>
+                        Click "Start Camera"
+                        to begin.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="cameraStatusBadge"
+                    class="camera-status-badge"
+                >
+                    CAMERA OFF
+                </div>
+
+            </div>
+
+
+            <div class="camera-controls">
+
+                <button
+                    id="startCameraButton"
+                    class="primary-button"
+                >
+                    Start Camera
+                </button>
+
+
+                <button
+                    id="stopCameraButton"
+                    class="secondary-button"
+                    disabled
+                >
+                    Stop Camera
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECOGNITION INFORMATION -->
+
+        <section class="recognition-card">
+
+            <div class="recognition-header">
+
+                <h2>
+                    Recognition Status
+                </h2>
+
+                <p>
+                    Recognition information
+                    will appear here.
+                </p>
+
+            </div>
+
+
+            <div class="recognition-status-box">
+
+                <div
+                    id="recognitionStatus"
+                    class="recognition-status unknown"
+                >
+                    Ready
+                </div>
+
+            </div>
+
+
+            <div class="recognition-details">
+
+
+                <div class="recognition-detail">
+
+                    <span>
+                        Employee
+                    </span>
+
+                    <strong
+                        id="recognizedEmployee"
+                    >
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="recognition-detail">
+
+                    <span>
+                        Employee ID
+                    </span>
+
+                    <strong
+                        id="recognizedEmployeeId"
+                    >
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="recognition-detail">
+
+                    <span>
+                        Similarity
+                    </span>
+
+                    <strong
+                        id="recognitionSimilarity"
+                    >
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="recognition-detail">
+
+                    <span>
+                        Confirmation
+                    </span>
+
+                    <strong
+                        id="recognitionConfirmation"
+                    >
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div
+                id="attendanceResult"
+                class="attendance-result"
+            >
+
+                <strong>
+                    Attendance
+                </strong>
+
+                <p>
+                    No attendance activity yet.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+    <!-- INSTRUCTIONS -->
+
+    <section class="scanner-instructions">
+
+        <h3>
+            How it works
+        </h3>
+
+        <div class="instruction-grid">
+
+            <div class="instruction-item">
+
+                <span>
+                    1
+                </span>
+
+                <p>
+                    Start the camera.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <span>
+                    2
+                </span>
+
+                <p>
+                    Look directly at the camera.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <span>
+                    3
+                </span>
+
+                <p>
+                    The system verifies
+                    the face.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <span>
+                    4
+                </span>
+
+                <p>
+                    Attendance is marked
+                    after confirmation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</section>
+
+
+<!-- =====================================================
+     ADD EMPLOYEE MODAL
+====================================================== -->
+
+<div
+    id="employeeModal"
+    class="modal"
+>
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Add Employee
+            </h2>
+
+            <button
+                id="closeEmployeeModal"
+                class="close-button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="employeeForm">
+
+
+            <div class="form-group">
+
+                <label for="employeeName">
+                    Name
+                </label>
+
+                <input
+                    type="text"
+                    id="employeeName"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="employeeEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="employeeEmail"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="employeeDepartment">
+                    Department
+                </label>
+
+                <input
+                    type="text"
+                    id="employeeDepartment"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="employeeDesignation">
+                    Designation
+                </label>
+
+                <input
+                    type="text"
+                    id="employeeDesignation"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="employeeImage">
+                    Face Image
+                </label>
+
+                <input
+                    type="file"
+                    id="employeeImage"
+                    accept="image/*"
+                >
+
+                <small>
+                    The employee will be created first,
+                    then the image will be uploaded.
+                </small>
+
+            </div>
+
+
+            <div
+                id="employeeFormMessage"
+                class="form-message"
+            >
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelEmployeeButton"
+                    class="secondary-button"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Create Employee
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     GLOBAL MESSAGE
+====================================================== -->
+
+<div
+    id="message"
+    class="message"
+>
+</div>
+
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
