@@ -92,3 +92,5 @@ out/
 .DS_Store
 Thumbs.db
 desktop.ini
+# Local README backup
+README-backup.md
